@@ -4,6 +4,7 @@ class Vehicle:
         self.model=model
         self.year=year
     
+    
     def details(self):
         raise NotImplementedError("Each Subclass should implement this method!")
     
@@ -16,7 +17,11 @@ class Car(Vehicle):
         self.number_of_doors= number_of_doors
         
     def details(self):
-        print(f"The car {self.make} model {self.model} of the year {self.year} has {self.number_of_doors} doors.")
+        print(f"Car: {self.make}\n" 
+              f"Model: {self.model}\n" 
+              f"Year of manufacture: {self.year}\n" 
+              f"NUmber of doors: {self.number_of_doors} doors.\n"
+              f"{'-'*100}")
     
     def age(self, current_year):
         return super().age(current_year)
@@ -27,7 +32,11 @@ class Truck(Vehicle):
         self.cargo_capacity=cargo_capacity
     
     def details(self):
-        print(f"The truck {self.make} model {self.model} of the year {self.year} has a capacity {self.cargo_capcity} tons.")
+        print(f"Truck: {self.make}\n"
+              f"Model: {self.model}\n "
+              f"Year of Manufacture: {self.year}\n" 
+              f"Capacity {self.cargo_capacity} tons.\n"
+              f"{'-'*100}")
     
     def age(self, current_year):
         return super().age(current_year)
