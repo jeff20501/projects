@@ -28,7 +28,7 @@ def main():
                     if choice2 == 1:
                         for car in cars:
                             if not car:
-                                print("There are currently no cars in this fleet:")
+                                print("There are currently no cars in this fleet:1")
                             else:
                                 car.details()
                                 print()
@@ -38,12 +38,15 @@ def main():
                         current_year=int(input('Enter the current year:'))
                         
                         for car in cars:
+                            found=False
                             if car.model==car_model:
-                                print(f"The car model {car.model} is {car.age(current_year)} year old")
+                                print(f"The car model {car.model} is {car.age(current_year)} year old\n"
+                                      f"{'-'*100}")
+                                found=True
                                 break
                             
-                            else:
-                                print("We currently don\'t have this model!")
+                        if not found:
+                            print("We currently don\'t have this model!")
                     
                     elif choice2 == 3:
                         print("You have exited this menu!")
@@ -60,21 +63,25 @@ def main():
                     if choice2 == 1:
                         for truck in trucks:
                             if not truck:
-                                print("There are currently no trucks in this fleet:")
+                                print("There are currently no trucks in this fleet:\n"
+                                      f"{'-'*100}")
                             else:
                                 truck.details()
                     
                     elif choice2 == 2:
                         truck_model=input('Enter the model of the truck:')
                         current_year=int(input('Enter the current year:'))
+                        found=False
                         
                         for car in cars:
                             if truck.model==truck_model:
-                                print(f"The truck model {truck.model} is {truck.age(current_year)} year old.")
-                                break
+                                print(f"The truck model {truck.model} is {truck.age(current_year)} year old.\n"
+                                      f"{'-'*100}")
+                                found=True
+                                break # break loop once found
                             
-                            else:
-                                print("We currently don\'t have this model!")
+                        if not found:
+                            print("We currently don\'t have this model!")
                     
                     elif choice2 == 3:
                         print("You have exited this menu!")
