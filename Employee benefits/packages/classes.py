@@ -15,14 +15,21 @@ class Full_time(Employee):
         super().__init__(name, salary, position)
         self.health_sub=health_sub
     
+    
     def display_employee_details(self):
-        print(f"Full-Time Employee: {self.name}, Position: {self.position}, Salary: {self.salary}, Health subscribtion: {self.health_sub}")
+        print(f"Full-Time Employee: {self.name}\n" 
+              f"Position: {self.position}\n"
+              f"Salary: {self.salary}\n"
+              f"Health subscribtion: {self.health_sub}\n"
+              f"{'-'*100}")
         
     def calculate_annual_salary(self):
         return super().calculate_annual_salary()
     
     def health_insurance(self, name):
-        print(f"The employee {self.name} has an weekly health insuarnce subscribtion of {self.health_sub}")
+        print(f"* The employee {self.name}\n"  
+              f"* Weekly health insuarnce subscribtion of {self.health_sub}\n"
+              f"{'-'*100}")
 
 class Part_time(Employee):
     def __init__(self, name, salary, position, work_hours):
@@ -30,13 +37,19 @@ class Part_time(Employee):
         self.work_hours=work_hours
     
     def display_employee_details(self):
-        print(f"Part-Time Employee: {self.name}, Position: {self.position}, Salary: {self.salary}, Working hours: {self.work_hours}")
+        print(f"Part-Time Employee: {self.name}\n"
+              f"Position: {self.position}\n"
+              f"Salary: {self.salary}\n"
+              f"Working hours: {self.work_hours}\n"
+              f"{'-'*100}")
         
     def calculate_annual_salary(self):
         return self.salary*self.work_hours
     
     def hours_weekly(self, name):
-        print(f"The Part time employee {self.name} works {self.work_hours} hours per week.")
+        print(f"The Part time employee {self.name}\n"
+              f"works {self.work_hours} hours per week.\n"
+              f"{'-'*100}")
 
 
 class Department:
@@ -45,7 +58,8 @@ class Department:
 
     def add_employee(self, employee):
         self.employees.append(employee)
-        print(f"The employee {employee.name} has sucessfully being added.")
+        print(f"The employee {employee.name} has sucessfully being added\n"
+              f"{':)'*10}")
     
     def calculate_payroll(self):
         # This calculate the money the compay uses to pay it's employees
