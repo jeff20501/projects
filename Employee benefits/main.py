@@ -1,16 +1,16 @@
 from packages.menu import main_menu, full_time_menu, part_time_menu
 from packages.classes import Employee, Full_time, Part_time, Department
 
+
 def main():
-    full_time_employee_list = [
-        Full_time(name='JEFF', position='Manager', salary=200000, health_sub=20000),
-        ]
-    part_time_employee_list = [
-        Part_time(name='JACK', position='Intern', salary=10000, work_hours=35)
+    employee_list = [
+        Full_time(name='JEFF KIMANI', position='Manager', salary=200000, health_sub=20000),
+        Part_time(name='JACK MWANGI', position='Intern', salary=10000, work_hours=35)
     ]
     department = Department()  # Usng composition
     # Composition involves building classes that contain instances of other classes, rather than inheriting from them. This means that instead of a Department being a subclass of Full_time and Part_time, it would contain instances of Full_time and Part_time.
-
+    department.employees.extend(employee_list)
+    
     while True:
         main_menu()
         try:
@@ -20,26 +20,38 @@ def main():
                 try:
                     choice2=int(input("Input the option you have decided to do: "))
                     if choice2 == 1:
-                        for employee in full_time_employee_list:
-                            employee.display_employee_details()
-                            print()
-                            if not employee:
-                                print("There are currently no employees in this type!")
+                        found = False
+                        for employee in employee_list:
+                            if isinstance(employee, Full_time):
+                                employee.display_employee_details()
+                                found=True
+                                break
+                        if not found:
+                            print("There are currently no employees in this type!")
 
                     elif choice2 == 2:
                         full_time_employee_name_salary = input("Enter the name of the employee: ")
-                        for employee in full_time_employee_list:
-                            if employee.name == full_time_employee_name_salary.upper():
-                                print(f"The employee  {full_time_employee_name_salary} has an yearly salary of {employee.calculate_annual_salary()}")
+                        found=False
+                        for employee in employee_list:
+                            
+                            if employee.name == full_time_employee_name_salary.strip().upper():
+                                print(f"The employee  {full_time_employee_name_salary.capitalize()} has an yearly salary of {employee.calculate_annual_salary()}")
+                                found=True
                                 break
-                            else:
-                                print(f"There is no such employee with this name ( {employee} ).")                            
+                        if not found:
+                            print(f"There is no such employee with this name ( {employee} ).\n"
+                                  f"{'-'*100}")      
+                    
                     elif choice2 == 3:
-                        full_time_employee_name_health_sub = input("Enter the employee's name: ")
-                        for employee in full_time_employee_list:
-                            employee.health_insurance(full_time_employee_name_health_sub)
-                            if not employee:
-                                print(f"There is no employee with the name ( {full_time_employee_name_health_sub} ).")
+                        full_time_employee_name_health_sub = input("Enter the employee's name: ").strip().upper()
+                        found=False
+                        for employee in employee_list:
+                            if isinstance(employee, Full_time):
+                                employee.health_insurance(full_time_employee_name_health_sub)
+                                found=True
+                        if not found:
+                            print(f"There is no employee with the name ( {full_time_employee_name_health_sub} ).")
+                    
                     elif choice2 == 4:
                         print("SEE YOU AGAIN NEXT TIME!")
                         break
@@ -55,31 +67,42 @@ def main():
                 try:
                     choice3=int(input("Input the option you have decided to do: "))
                     if choice3 == 1:
-                        for employee in  part_time_employee_list:
-                            employee.display_employee_details()
-                            print()
+                        found=False
+                        for employee in employee_list:
+                            if isinstance(employee, Part_time):
+                                employee.display_employee_details()
+                                found=True
+                                break #stop loop once found
+                                
                             if not employee:
                                print("There are currently no employees in this type!")
 
                     elif choice3 == 2:
                         part_time_employee = input("Enter the name of the employee: ")
-                        for employee in part_time_employee_list:
-                            if employee.name == part_time_employee.upper():
-                                print(f"The employee {part_time_employee} has an yearly salary of {employee.calculate_annual_salary()}")
-                                break
-                            else:
-                                print(f"There is no such employee with this name ( {part_time_employee} ).")                            
+                        for employee in employee_list:
+                            if isinstance(employee, Part_time):
+                                if employee.name == part_time_employee.strip().upper():
+                                    print(f"The employee {part_time_employee} has an yearly salary of {employee.calculate_annual_salary()}")
+                                    break
+                                else:
+                                    print(f"There is no such employee with this name ( {part_time_employee} ).")                            
+                    
                     elif choice3 == 3:
                         employee_name2 = input("Enter the employee's name: ")
-                        for employee in part_time_employee_list:
-                            if not employee:
-                                print(f"There is no employee with the name ( {employee_name2} ).")
-                            else:
+                        found=False
+                        for employee in employee_list:
+                            if isinstance(employee, Part_time):
                                 employee.hours_weekly(employee_name2)
-                                break
+                                found=True
+                                break           
+    
+                        if not found:
+                            print(f"There is no employee with the name ( {employee_name2} ).")
+                   
                     elif choice2 == 4:
                         print("SEE YOU AGAIN NEXT TIME!")
                         break
+                   
                     else:
                         print("Invalid input!! Enter either 1, 2 or 3 to exit")
                         
@@ -87,7 +110,7 @@ def main():
                             print('Enter a number as represented by the choices given!')         
             
             elif choice == 3:
-                new_employee_name = input("Enter the name of the employee: ").upper()
+                new_employee_name = input("Enter the name of the employee: ").strip().upper()
                 employee_position = input("Enter the position the employee will occupy: ")
                 employee_salary = int(input("Enter the stating salry of this employee: "))
                 new_employee_type = input("What will be the type of employee (Full time or Part time): ")
@@ -96,7 +119,7 @@ def main():
                     try:
                         employee_health_insuarance_sub = int(input("Input the health subscribtion of the Employee: "))
                         new_full_time_employee = Full_time(new_employee_name, employee_salary, employee_position, employee_health_insuarance_sub)
-                        department = Department()   
+                          
                         department.add_employee(new_full_time_employee)  # Using composition instead of inheriting!!!
                     except ValueError:
                         print("Enter a number for the price of the Health Insuarance subscribtion!!")
@@ -122,11 +145,20 @@ def main():
                 else:
                     print("There is no employee with that name!!")
             elif choice ==5:
-                    department.display_all_employee_details()
-                    print()
+                found = False
+                for employee in employee_list:
+                    if isinstance(employee, (Full_time, Part_time)):
+                        department.display_all_employee_details()
+                        found=True
+                        break
+                if not found:
+                    print("There are currently no Registered Employees!\n"
+                          f"{'-'*100}")
+                        
                     
             elif choice==6:
-                print("See you next time. Goodbye!")
+                print("See you next time. Goodbye!\n"
+                      f"{'-'*100}")
                 break
             
             else:
