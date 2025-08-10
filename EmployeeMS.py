@@ -53,7 +53,7 @@ class Developer(Employee):
         bonus = percentage/100 * salary
         salary+=bonus
         for key, value in self.employee.items():
-            print(f"The salary of {value.name} of the department {key} was increased by a percentage of {percentage:.2f}% your salary is now {salary}")
+            print(f"The salary of {value.name} of the department {key} was increased by a percentage of {percentage:.2f}% your salary is now {salary:.2f}")
         
         
 while True:
